@@ -1,3 +1,4 @@
+#!/home/asyuksek/anaconda3/bin/python3
 from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver.common.by import By
