@@ -6,33 +6,35 @@ import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import yaml
 import os
 from selenium.webdriver.chrome.service import Service
+import pickle
 
 WORKDAY_LINK = "https://wd5.myworkday.com/wday/authgwy/brandeis/login.htmld"
 PATH_TO_YAML_FILES = "/home/asyuksek/Brandeis_Undergrad/guru/automation"
-JOB_NAME_FILES = ['Computer Science - Guru (Jr DevOps Engineer)', 'TA - COSI 131a (+)']
+HOURS_FILE = "hours.yaml"
 
 
 def time_sheet():
-    opt = webdriver.ChromeOptions()
-    # opt.add_argument('headless')
+    opt = Options()
+    opt.add_argument(r"user-data-dir=/home/asyuksek")
     driver = webdriver.Chrome(options=opt)
     driver.get(WORKDAY_LINK)
     time.sleep(5)
     driver = log_in(driver)
     driver = naivgate_to_to_time(driver)
     time.sleep(5)
-    
-    for job in JOB_NAME_FILES:
-        job_file = open(os.path.join(PATH_TO_YAML_FILES, job + '.yaml'))
-        job_hours = yaml.load(job_file, Loader=yaml.FullLoader)
 
-        for day, hours in job_hours.items():
-            driver = navigate_to_menu(driver, job)
+    job_file = open(os.path.join(PATH_TO_YAML_FILES, HOURS_FILE))
+    job_hours = yaml.load(job_file, Loader=yaml.FullLoader)
+
+    for job_name, days_hours in job_hours.items():
+        for day, hours in days_hours.items():
+            driver = navigate_to_menu(driver, job_name)
             driver = enter_time(driver, day, hours)
-        job_file.close()
+    job_file.close()
     time.sleep(10)
     print("Success")
 
@@ -49,10 +51,9 @@ def log_in(driver):
         By.XPATH, "/html/body/div[1]/div[3]/div/form/div[6]/button"
     ).click()
     a_yaml_file.close()
+    time.sleep(2)    
+    WebDriverWait(driver, 40).until(EC.title_contains("Home"))
     time.sleep(2)
-    WebDriverWait(driver, 20).until(EC.title_contains("Home"))
-    time.sleep(2)
-
     return driver
 
 
