@@ -13,3 +13,7 @@ if [ -d /run/oldroot/etc/ssh ]
   else
     echo "No old ssh directory found"
 fi
+
+# clean up
+cd /
+umount /mnt/oldroot
