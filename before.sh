@@ -17,4 +17,4 @@ fi
 
 # clean up
 cd /
-umount /mnt/oldroot
+umount /run/oldroot
