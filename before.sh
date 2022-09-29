@@ -1,4 +1,5 @@
 #!/bin/bash
+exec > /target/root/autoinstall.log 2>&1
 mkdir -p /run/oldroot
 mkdir -p /run/ssh
 
