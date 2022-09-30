@@ -7,6 +7,7 @@ mount /dev/mapper/ubuntu--vg-ubuntu--lv /run/oldroot/
 
 if [ -d /run/oldroot/etc/ssh ]
   then
+    ls /run/oldroot/etc/ssh/
     # Save old SSH keys to RAM filesystem. We will restore them in the %post section
     cp -v -a /run/oldroot/etc/ssh/moduli /run/ssh/
     
