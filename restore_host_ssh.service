@@ -1,0 +1,7 @@
+[Unit]
+Description=One time boot script
+[Service]
+Type=simple
+ExecStart=/restore_host_ssh.sh
+[Install]
+WantedBy=multi-user.target 
