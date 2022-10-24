@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-KEYS=$(ls /run/ssh/ssh_host_* | wc -l)
+KEYS=$(ls /root/ssh_host_keys/ssh_host_* | wc -l)
 if [ $KEYS -ge 6 ]
   then
     cp -v -a '/root/ssh_host_keys/'* /etc/ssh/
